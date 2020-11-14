@@ -1,12 +1,39 @@
 /*
-    https://programmers.co.kr/learn/courses/30/lessons/68646
-    [í”„ë¡œê·¸ë˜ë¨¸ìŠ¤][ì›”ê°„ ì½”ë“œ ì±Œë¦°ì§€ ì‹œì¦Œ1] í’ì„  í„°íŠ¸ë¦¬ê¸° (level 3)
+ * https://programmers.co.kr/learn/courses/30/lessons/68646
+ * ÇÁ·Î±×·¡¸Ó½º - ¿ù°£ ÄÚµå Ã§¸°Áö ½ÃÁğ1 - Ç³¼± ÅÍÆ®¸®±â(level 3)
  */
+
 package week1.question3;
 
 class Solution {
     public int solution(int[] a) {
-        int answer = 0;
-        return answer;
+        
+        //variables
+        int answer = 2;
+        int first = a[0];
+        int last = a[a.length - 1];
+        
+        //always first and last ballons are possible
+        //divide into three groups, first, middle and last
+        //only fail, if both first and last ballons are less than middle ballon
+        for(int i = 1; i < a.length - 1; i++)
+        {
+            //check left
+            if(first > a[i])
+            {
+                answer++;
+                first = a[i];
+            }
+            
+            //check right
+            if(last > a[a.length - 1 - i])
+            {
+                answer++;
+                last = a[a.length - 1 - i];
+            }  
+        }
+        
+        //duplication check
+        return first == last ? answer - 1 : answer;
     }
 }

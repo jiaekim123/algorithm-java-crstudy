@@ -5,6 +5,7 @@
 package week2.question3;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class Solution {
@@ -21,22 +22,39 @@ class Solution {
         // 노래 찾아보기
         return findMusic(m, musicList);
     }
-    private int getPlayTime(String startTime, String endTime){
+
+    private int getPlayTime(String startTime, String endTime) {
         String[] startTimes = startTime.split(":");
         String[] endTimes = endTime.split(":");
         int start = Integer.parseInt(startTimes[0]) * 60 + Integer.parseInt(startTimes[1]);
         int end = Integer.parseInt(endTimes[0]) * 60 + Integer.parseInt(endTimes[1]);
         return end - start;
     }
+
     private String findMusic(String m, List<Song> musicList) {
-        String answer = "None";
+        String answer = "(None)";
         int answerPlayTime = 0;
         for (Song song : musicList) {
-            if (song.totalSong.contains(m) && answerPlayTime < song.playTime) {
+            if (isSameSong(song, m, answerPlayTime)) {
                 answer = song.name;
+                answerPlayTime = song.playTime;
             }
         }
         return answer;
+    }
+
+    private boolean isSameSong(Song song, String m, int answerPlayTime){
+        if (song.totalSong.contains(m) && answerPlayTime < song.playTime) {
+            String[] splits = song.totalSong.split(m);
+            if (splits.length==1 || song.totalSong.endsWith(m)){
+                return true;
+            } else {
+                for (int i = 1; i < splits.length; i++){
+                    if (!splits[i].startsWith("#")) return true;
+                }
+            }
+        }
+        return false;
     }
 }
 
@@ -56,11 +74,11 @@ class Song {
     // 라디오에 나온 노래 전체 저장하기
     private String getTotalSong(int playTime, String song) {
         StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < playTime / song.length(); i++) {
+        int songSingleTime = song.length() - song.split("#").length + 1;
+        for (int i = 0; i < playTime / songSingleTime; i++) {
             sb.append(song);
         }
-        String lastWord = song.substring(0, playTime % song.length());
+        String lastWord = song.substring(0, playTime % songSingleTime);
         sb.append(lastWord);
         return sb.toString();
     }

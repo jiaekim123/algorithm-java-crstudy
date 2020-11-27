@@ -5,7 +5,6 @@
 package week2.question3;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 class Solution {
@@ -35,7 +34,7 @@ class Solution {
         String answer = "(None)";
         int answerPlayTime = 0;
         for (Song song : musicList) {
-            if (isSameSong(song, m, answerPlayTime)) {
+            if (isSameSong(song, Song.transform(m), answerPlayTime)) {
                 answer = song.name;
                 answerPlayTime = song.playTime;
             }
@@ -45,14 +44,7 @@ class Solution {
 
     private boolean isSameSong(Song song, String m, int answerPlayTime){
         if (song.totalSong.contains(m) && answerPlayTime < song.playTime) {
-            String[] splits = song.totalSong.split(m);
-            if (splits.length==1 || song.totalSong.endsWith(m)){
                 return true;
-            } else {
-                for (int i = 1; i < splits.length; i++){
-                    if (!splits[i].startsWith("#")) return true;
-                }
-            }
         }
         return false;
     }
@@ -67,19 +59,32 @@ class Song {
     public Song(String name, int playTime, String song) {
         this.name = name;
         this.playTime = playTime;
-        this.song = song;
-        this.totalSong = getTotalSong(playTime, song);
+        this.song = transform(song);
+        this.totalSong = getTotalSong(playTime, transform(song));
     }
 
     // 라디오에 나온 노래 전체 저장하기
     private String getTotalSong(int playTime, String song) {
         StringBuilder sb = new StringBuilder();
-        int songSingleTime = song.length() - song.split("#").length + 1;
-        for (int i = 0; i < playTime / songSingleTime; i++) {
+        for (int i = 0; i < playTime / song.length(); i++) {
             sb.append(song);
         }
-        String lastWord = song.substring(0, playTime % songSingleTime);
+        String lastWord = song.substring(0, playTime % song.length());
         sb.append(lastWord);
+        return sb.toString();
+    }
+
+    // song 값 # 변환하기
+    public static String transform(String song) {
+        StringBuilder sb = new StringBuilder();
+        char[] songArr = song.toCharArray();
+        for (int i = 0; i < song.length(); i++) {
+            if ((i!=song.length()-1) && (songArr[i+1]=='#')) {
+                sb.append(Character.toLowerCase(songArr[i]));
+            } else if (songArr[i]!='#'){
+                sb.append(songArr[i]);
+            }
+        }
         return sb.toString();
     }
 }

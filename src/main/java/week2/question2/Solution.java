@@ -10,33 +10,29 @@ import java.util.Queue;
 class Solution {
     private final static int NUMBER_OF_AREA = 0;
     private final static int MAX_SIZE_OF_ONE_AREA = 1;
+    private static int size = 0;
     public int[] solution(int m, int n, int[][] picture) {
         int[] answer = new int[2];
         boolean[][] visited = new boolean[m][n];
-        int maxSizeOneColor = 0;
-        int areaCount = 0;
-        int size = 0;
         for (int x = 0; x < m; x++) {
             for (int y = 0; y < n; y++){
                 if (picture[x][y] > 0 && visited[x][y] != true){
                     size = 1;
-                    bfs(picture, visited, size, x, y, m, n);
-                    areaCount++;
-                    if(maxSizeOneColor < size){
-                        maxSizeOneColor = size;
+                    bfs(picture, visited, x, y, m, n);
+                    answer[NUMBER_OF_AREA]++;
+                    if(answer[MAX_SIZE_OF_ONE_AREA] < size){
+                        answer[MAX_SIZE_OF_ONE_AREA] = size;
                     }
                 }
             }
         }
-        answer[0] = areaCount;
-        answer[1] = maxSizeOneColor;
-        System.out.println(areaCount + ", " +maxSizeOneColor);
         return answer;
     }
 
-    private void bfs(int[][] picture, boolean[][] visited, int size, int x, int y, int m, int n){
+    private void bfs(int[][] picture, boolean[][] visited, int x, int y, int m, int n){
         Queue<Point> queue = new LinkedList<>();
         visited[x][y] = true;
+        queue.offer(new Point(x, y));
 
         while (!queue.isEmpty()){
             Point point = queue.poll();

@@ -4,9 +4,7 @@
  */
 package week2.question2;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 class Solution {
@@ -14,63 +12,56 @@ class Solution {
     private final static int MAX_SIZE_OF_ONE_AREA = 1;
     public int[] solution(int m, int n, int[][] picture) {
         int[] answer = new int[2];
-        boolean[][] visited = new boolean[picture.length][picture[0].length];
-        bfs(picture, visited, answer);
-        return answer;
-    }
-
-    private void bfs(int[][] picture, boolean[][] visited, int[] answer){
-        Queue<Point> queue = new LinkedList<>();
-        for (int i = 0; i<picture.length; i++){
-            for (int j = 0; j<picture[0].length; j++){
-                if (picture[i][j]!=0){
-                    queue.offer(new Point( i, j, picture[i][j]));
-                    visited[i][j] = true;
-                    break;
-                }
-            }
-        }
-        while (!queue.isEmpty()){
-            Point point = queue.poll();
-            List<Point> connectList = new ArrayList<>();
-            List<Point> disconnectList = new ArrayList<>();
-            for (Direction direction : Direction.values()){
-                int newX = point.x + direction.x;
-                int newY = point.y + direction.y;
-                if (newX >= 0 && newX < picture.length && newY >= 0 && newY < picture[0].length) {
-                    if (!visited[newX][newY]) {
-                        if (picture[point.x][point.y] != picture[newX][newY]) {
-                            disconnectList.add(new Point(newX, newY, picture[newX][newY]));
-                        } else {
-                            connectList.add(new Point(newX, newY, picture[newX][newY]));
-                        }
-
+        boolean[][] visited = new boolean[m][n];
+        int maxSizeOneColor = 0;
+        int areaCount = 0;
+        int size = 0;
+        for (int x = 0; x < m; x++) {
+            for (int y = 0; y < n; y++){
+                if (picture[x][y] > 0 && visited[x][y] != true){
+                    size = 1;
+                    bfs(picture, visited, size, x, y, m, n);
+                    areaCount++;
+                    if(maxSizeOneColor < size){
+                        maxSizeOneColor = size;
                     }
                 }
             }
-            if (connectList.size()==0){
-                answer[NUMBER_OF_AREA]++;
-            }
+        }
+        answer[0] = areaCount;
+        answer[1] = maxSizeOneColor;
+        System.out.println(areaCount + ", " +maxSizeOneColor);
+        return answer;
+    }
 
-            for (Point newPoint : disconnectList){
-                visited[newPoint.x][newPoint.y] = true;
-                queue.offer(newPoint);
-            }
-            for (Point newPoint : connectList){
-                visited[newPoint.x][newPoint.y] = true;
-                queue.offer(newPoint);
-            }
+    private void bfs(int[][] picture, boolean[][] visited, int size, int x, int y, int m, int n){
+        Queue<Point> queue = new LinkedList<>();
+        visited[x][y] = true;
 
+        while (!queue.isEmpty()){
+            Point point = queue.poll();
+            for (Direction direction : Direction.values()){
+                int newX = point.x + direction.x;
+                int newY = point.y + direction.y;
+                if (newX >= 0 && newX < m && newY >= 0 && newY < n) {
+                    if (!visited[newX][newY]) {
+                        if (picture[point.x][point.y] == picture[newX][newY]) {
+                            queue.offer(new Point(newX, newY));
+                            visited[newX][newY] = true;
+                            size++;
+                        }
+                    }
+                }
+            }
         }
 
     }
 }
 class Point {
-    int x, y, color;
-    public Point(int x, int y, int color){
+    int x, y;
+    public Point(int x, int y){
         this.x = x;
         this.y = y;
-        this.color = color;
     }
 }
 enum Direction {

@@ -1,12 +1,28 @@
 /*
     https://programmers.co.kr/learn/courses/30/lessons/42747
-    [í”„ë¡œê·¸ëž˜ë¨¸ìŠ¤][ì •ë ¬] H-Index (level 2)
+    ÇÁ·Î±×·¡¸Ó½º - Á¤·Ä - H-Index (level 2)
  */
 package week3.question1;
 
+//import
+import java.util.Arrays;
+
 class Solution {
-    public int solution(int[] citations) {
-        int answer = 0;
-        return answer;
-    }
+  public int solution(int[] citations) {
+      
+      //variables
+      int answer = 0;
+      
+      Arrays.sort(citations);
+
+      for(int i = 0; i < citations.length; i++)
+      {
+          if(citations[i] >= citations.length - i)
+          {
+              answer = Math.max(answer, citations.length - i);
+          }
+      }
+      
+      return answer;
+  }
 }

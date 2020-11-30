@@ -1,6 +1,6 @@
 /*
-    https://programmers.co.kr/learn/courses/30/lessons/42747
-    프로그래머스 - 정렬 - H-Index (level 2)
+ *	https://programmers.co.kr/learn/courses/30/lessons/42747
+ *	프로그래머스 - 정렬 - H-Index (level 2)
  */
 package week3.question1;
 

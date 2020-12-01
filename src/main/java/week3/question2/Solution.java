@@ -6,7 +6,17 @@ package week3.question2;
 
 class Solution {
     public int[] solution(int brown, int yellow) {
-        int[] answer = {};
+        int[] answer = new int[2];
+        for (int i = 1; i <= yellow; i++){
+            if (yellow % i == 0) {
+                int j = yellow / i;
+                if (brown == (i * 2 + j * 2 + 4)){
+                    answer[0] = i + 2;
+                    answer[1] = j + 2;
+                    if (i >= j) break;
+                }
+            }
+        }
         return answer;
     }
 }

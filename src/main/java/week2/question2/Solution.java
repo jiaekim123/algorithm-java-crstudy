@@ -9,24 +9,19 @@ import java.util.Queue;
 
 class Solution {
     public int[] solution(int m, int n, int[][] picture) {
-        int maxSizeOfOneArea = Integer.MIN_VALUE;
-        int numberOfArea = 0;
 
+        int[] answer = new int[2];
         boolean[][] visited = new boolean[m][n];
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (!visited[i][j] && picture[i][j] != 0) {
-                    int size = getArea(i, j, m, n, picture, visited);
-                    numberOfArea++;
-                    maxSizeOfOneArea = Math.max(size, maxSizeOfOneArea);
+                    answer[0]++;
+                    answer[1] = Math.max(getArea(i, j, m, n, picture, visited), answer[1]);
                 }
             }
         }
 
-        int[] answer = new int[2];
-        answer[0] = numberOfArea;
-        answer[1] = maxSizeOfOneArea;
         return answer;
     }
 
@@ -43,8 +38,8 @@ class Solution {
     private int getArea(int x, int y, int m, int n, int[][] picture, boolean[][] visited) {
 
         int size = 0;
-        int[] moveX = {0, 1};
-        int[] moveY = {1, 0};
+        int[] moveX = {0, 1, -1, 0};
+        int[] moveY = {1, 0, 0, -1};
         Queue<XY> que = new LinkedList<>();
         visited[x][y] = true;
         que.offer(new XY(x, y, picture[x][y]));
@@ -53,7 +48,7 @@ class Solution {
             XY now = que.poll();
             size++;
 
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 4; i++) {
                 int xx = now.x + moveX[i];
                 int yy = now.y + moveY[i];
                 if (0 <= xx && xx < m && 0 <= yy && yy < n) {

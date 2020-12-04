@@ -1,12 +1,18 @@
 /*
-    https://programmers.co.kr/learn/courses/30/lessons/42842
-    [í”„ë¡œê·¸ë˜ë¨¸ìŠ¤][ì™„ì „íƒìƒ‰] ì¹´í« (level 2)
+ *	https://programmers.co.kr/learn/courses/30/lessons/42842
+ *	ÇÁ·Î±×·¡¸Ó½º - ¿ÏÀüÅ½»ö - Ä«Æê (level 2)
  */
 package week3.question2;
 
 class Solution {
     public int[] solution(int brown, int yellow) {
-        int[] answer = {};
+        
+        //variables
+        int xSumY = (brown + 4) / 2;
+        int xY = brown + yellow;
+        
+        int[] answer = {(int) (xSumY + Math.sqrt(xSumY * xSumY - 4 * xY)) / 2, 
+                        (int) (xSumY - Math.sqrt(xSumY * xSumY - 4 * xY)) / 2};
         return answer;
     }
 }

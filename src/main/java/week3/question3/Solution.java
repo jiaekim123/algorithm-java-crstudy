@@ -6,38 +6,26 @@ package week3.question3;
 
 class Solution {
     public int solution(String name) {
+        int answer = 0;
         char[] nameArr = name.toCharArray();
-        int rightCount = getRightCount(nameArr);
-        int leftCount = getLeftCount(nameArr);
-        return  rightCount < leftCount ? rightCount : leftCount ;
+        int totalMoveCount = nameArr.length - 1;
+        for (int i = 0; i<nameArr.length; i++){
+            answer += getAlphabetChangeCount(nameArr[i]);
+            totalMoveCount = getMoveCount(nameArr, i, totalMoveCount);
+        }
+
+        return answer + totalMoveCount;
     }
-    private int getRightCount(char[] nameArr){
-        int answer = 0;
-        int size = nameArr.length - 1;
-        while(size > 0 && nameArr[size] == 'A'){
-            size--;
+
+    private int getMoveCount(char[] nameArr, int i, int count) {
+        int moveTo = i + 1;
+        while (moveTo < nameArr.length && nameArr[moveTo] == 'A') {
+            moveTo++;
         }
-        for (int i = 0; i <=size; i++){
-            answer += getCount(nameArr[i]);
-            answer++;
-        }
-        return answer-1;
+        return Math.min(count, (i * 2) + nameArr.length - moveTo);
+
     }
-    private int getLeftCount(char[] nameArr){
-        int answer = 0;
-        int size = 1;
-        while(size < nameArr.length-1 && nameArr[size] == 'A'){
-            size++;
-        }
-        answer += getCount(nameArr[0]);
-        answer++;
-        for (int i = nameArr.length - 1; i >=size; i--){
-            answer += getCount(nameArr[i]);
-            answer++;
-        }
-        return answer-1;
-    }
-    private int getCount(char alphabet){
+    private int getAlphabetChangeCount(char alphabet){
         int A = 65;
         int Z = 90;
         int up = (int)alphabet - A;

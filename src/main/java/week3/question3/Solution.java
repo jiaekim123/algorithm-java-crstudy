@@ -1,6 +1,6 @@
 /*
  *	https://programmers.co.kr/learn/courses/30/lessons/42860 
- *	ÇÁ·Î±×·¡¸Ó½º - Å½¿å¹ý - Á¶ÀÌ½ºÆ½ (level 3)
+ *	ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½Ó½ï¿½ - Å½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½Ì½ï¿½Æ½ (level 3)
  */
 package week3.question3;
 
@@ -37,12 +37,9 @@ class Solution {
         //variables
         int index = 0;
         int reverseIndex = 0;
-        
-        if(change != 'A')
-        {
-            index = change - 'A';
-            reverseIndex = 'Z' + 1 - change;
-        }
+
+        index = change - 'A';
+        reverseIndex = 'Z' + 1 - change;
         
         return Math.min(index, reverseIndex);
     }

@@ -6,7 +6,6 @@ package week4.question3;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 class Solution {
@@ -17,28 +16,29 @@ class Solution {
             trafficList.add(new Traffic(line));
         }
 
-        for (int i = 0; i <trafficList.size(); i++){
-            int count = 0;
-            long startSection = trafficList.get(i).startTime;
-            long endSection = startSection + 1000;
-
-            for (int j = 0; j < trafficList.size(); j++) {
-                if (startSection <= trafficList.get(i).startTime
-                        && trafficList.get(i).startTime < endSection) {
-                    count++;
-                } else if (startSection <= trafficList.get(i).endTime
-                        && trafficList.get(i).endTime < endSection) {
-                    count++;
-                } else if (startSection <= trafficList.get(i).startTime
-                        && trafficList.get(i).endTime <= endSection) {
-                    count++;
-                }
-                answer = count > answer ? count : answer;
-            }
-
-        }
+        // 요청량이 변하는 순간은 각 로그의 시작과 끝뿐이다.
+        answer = getCountMax(trafficList, true, answer);
+        answer = getCountMax(trafficList, false, answer);
 
         return answer;
+    }
+    private int getCountMax (List<Traffic> trafficList, boolean isStart, int maxCount){
+        for (int i = 0; i <trafficList.size(); ++i){
+            int count = 0;
+            long startSection = isStart ? trafficList.get(i).startTime : trafficList.get(i).endTime;
+            long endSection = startSection + 1000;
+
+            for (int j = 0; j < trafficList.size(); ++j) {
+                if ((startSection <= trafficList.get(j).startTime && trafficList.get(j).startTime < endSection)
+                        || (startSection <= trafficList.get(j).endTime && trafficList.get(j).endTime < endSection)
+                        || (trafficList.get(j).startTime<=startSection && endSection<=trafficList.get(j).endTime)) {
+                    count++;
+                }
+
+                maxCount = Math.max(maxCount, count);
+            }
+        }
+        return maxCount;
     }
 }
 class Traffic {
@@ -61,7 +61,5 @@ class Traffic {
             System.out.println("데이터 포맷 에러");
             e.printStackTrace();
         }
-        System.out.println(dateFormat.format(startTime));
-        System.out.println(dateFormat.format(endTime));
     }
 }

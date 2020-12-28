@@ -10,7 +10,7 @@ class Solution {
 
         int answer = Integer.MAX_VALUE;
 
-        for (int rsize = 1; rsize <= s.length(); rsize++) {
+        for (int rsize = 1; rsize <= s.length() / 2 || rsize == 1; rsize++) {
 
             int count = 0;
             int startIdx = 0;

@@ -48,9 +48,8 @@ class Solution {
         int answer = shuttleTimeTalbe[n - 1];
         if (isFulled[n - 1] != 0) answer = isFulled[n - 1] - 1;
 
-        return  String.format("%02d", answer / 60) +
-                ":" +
-                String.format("%02d", answer % 60);
+
+        return String.format("%02d:%02d", answer / 60, answer % 60);
     }
 
 }

@@ -19,6 +19,7 @@ class Solution {
                 String repeat = s.substring(startIdx, startIdx + rsize);
                 String temp = s.substring(startIdx);
                 int subCount = getRepeatCount(temp, repeat);
+                // Math.log10(subCount) + 1 : 반복 횟수의 10 자릿수
                 count += subCount > 1 ? Math.log10(subCount) + 1 + rsize : rsize;
                 startIdx += subCount * rsize;
             }

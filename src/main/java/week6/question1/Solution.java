@@ -15,10 +15,6 @@ class Solution {
         List<String> answerList = new ArrayList<>();
         Map<String, String> map = new HashMap<>();
 
-        String[] actives = new String[record.length];
-        String[] ids = new String[record.length];
-        String[] names = new String[record.length];
-
         for (int i = 0; i < record.length; i++) {
             if (record[i].split(" ").length == 3) {
                 String active = record[i].split(" ")[0];

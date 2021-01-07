@@ -13,5 +13,7 @@ class SolutionTest {
         assertEquals(8, new Solution().solution("abcabcdede"));
         assertEquals(14, new Solution().solution("abcabcabcabcdededededede"));
         assertEquals(17, new Solution().solution("xababcdcdababcdcd"));
+        assertEquals(5, new Solution().solution("xxxxxxxxxxyyy"));
+        assertEquals(1, new Solution().solution("a"));
     }
 }

@@ -16,7 +16,7 @@ class Solution {
       int size = 0;
       int index = 0;
       HashMap<String, String> userName = new HashMap<>();
-
+      
       //split by empty space
       for(String infos : record)
       {

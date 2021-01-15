@@ -21,7 +21,7 @@ class Solution {
     }
 
     private void dfs(String[][] relation, boolean[] visited, int columnLength, int k) {
-        if (columnLength - 1 == k) {
+        if (columnLength == k) {
             if (!isDuplicate(relation, visited, columnLength) && isOnlyOne(visited)) {
                 results.add(Arrays.copyOf(visited, columnLength));
             }

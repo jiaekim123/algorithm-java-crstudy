@@ -6,7 +6,20 @@ package week7.question1;
 
 class Solution {
     public long solution(int w, int h) {
-        long answer = 1;
-        return answer;
+        //variables
+        long gcd = getGCD((long) w, (long) h);
+
+        return (long) w * (long) h - ((long) w + (long) h - gcd);
+    }
+    
+    //get Greatest Common Divisor
+    private long getGCD(long w, long h)
+    {
+        if(h == 0)
+        {
+            return w;
+        }
+        
+        return getGCD(h, w % h);
     }
 }
